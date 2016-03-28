@@ -8,29 +8,28 @@ public class Main {
 
     public static void main(String[] args) {
 
-        StringBuilder inputString = new StringBuilder("This is a string.");
+        String inputString = "This    is a      string.";
 
-        System.out.println(removeLeadingSpacesFromString(inputString.toString()));
+        System.out.println(reverseStringWordForWord(inputString));
 
     }
 
-    public static String reverseStringWordForWord(StringBuilder inputString) {
+    public static String reverseStringWordForWord(String inputString) {
 
         StringBuilder reversedString = new StringBuilder("");
-        inputString = new StringBuilder(removeExtraSpacesFromString(inputString.toString()));
-        int lastWorkingIndex = inputString.length() - 1;
+        StringBuilder inputStringBuilder = new StringBuilder(removeExtraSpacesFromString(inputString));
+        int lastWorkingIndex = inputStringBuilder.length() - 1;
 
         for (int currentIndex = lastWorkingIndex; currentIndex >= 0; currentIndex--) {
 
             if (currentIndex != 0) {
-                if (inputString.charAt(currentIndex) == ' ') {
-                    reversedString = reversedString.append(inputString.substring(currentIndex+1, lastWorkingIndex+1));
+                if (inputStringBuilder.charAt(currentIndex) == ' ') {
+                    reversedString = reversedString.append(inputStringBuilder.substring(currentIndex + 1, lastWorkingIndex + 1));
                     reversedString = reversedString.append(" ");
-                    lastWorkingIndex = currentIndex-1;
+                    lastWorkingIndex = currentIndex - 1;
                 }
-            }
-            else {
-                reversedString = reversedString.append(inputString.substring(0, lastWorkingIndex+1));
+            } else {
+                reversedString = reversedString.append(inputStringBuilder.substring(0, lastWorkingIndex + 1));
             }
         }
         return reversedString.toString();
@@ -39,13 +38,16 @@ public class Main {
     public static String removeExtraSpacesFromString(String inputString) {
 
         if (inputString.length() == 0 ||
-                inputString.equals(' ') ||
-                containsOnlySpaces(inputString)) {
+            inputString.equals(' ') ||
+            containsOnlySpaces(inputString)) {
+
             return "";
         }
-        else {
-            inputString = removeLeadingSpacesFromStringRecursive(inputString.toString());
-            inputString = removeFollowingSpacesFromStringRecursive(inputString.toString());
+        else
+        {
+            inputString = removeLeadingSpacesFromString(inputString);
+            inputString = removeFollowingSpacesFromString(inputString);
+
             StringBuilder inputStringBuilder = new StringBuilder(inputString);
             int spaceEncounteredAtIndex;
             ArrayList<Integer> indicesToDelete = new ArrayList<Integer>();
@@ -61,15 +63,13 @@ public class Main {
                         spaceEncounteredAtIndex++;
                     }
                     index = spaceEncounteredAtIndex + 2;
-                }
-                else {
+                } else {
                     index++;
                 }
             }
-            System.out.println(indicesToDelete.toString());
             int indexAdjuster = 0;
             for (Integer indexToDelete : indicesToDelete) {
-                inputStringBuilder.deleteCharAt(indexToDelete+indexAdjuster);
+                inputStringBuilder.deleteCharAt(indexToDelete + indexAdjuster);
                 indexAdjuster--;
             }
             return inputStringBuilder.toString();
@@ -78,7 +78,7 @@ public class Main {
 
     public static boolean containsOnlySpaces(String inputString) {
 
-        for (int counter=0; counter<=inputString.length()-1; counter++) {
+        for (int counter = 0; counter <= inputString.length() - 1; counter++) {
 
             if (inputString.charAt(counter) != ' ') {
                 return false;
@@ -87,32 +87,17 @@ public class Main {
         return true;
     }
 
-    public static String removeLeadingSpacesFromStringRecursive(String inputString) {
-
-        if (inputString.length() == 0 ||
-                inputString.equals(' ')) {
-            return "";
-        }
-        else if (inputString.charAt(0) != ' ') {
-            return inputString;
-        }
-        else {
-            return removeLeadingSpacesFromStringRecursive(
-                    inputString.substring(1, inputString.length())
-            );
-        }
-    }
-
     public static String removeLeadingSpacesFromString(String inputString) {
 
         if (inputString.length() == 0 || inputString.charAt(0) != ' ') {
+
             return inputString;
         }
         else if (inputString.equals(" ")) {
+
             return "";
         }
-        else
-        {
+        else {
             StringBuilder stringBuilder = new StringBuilder(inputString);
             int index = 0;
             while (stringBuilder.charAt(index) == ' ') {
@@ -125,35 +110,24 @@ public class Main {
     public static String removeFollowingSpacesFromString(String inputString) {
 
         if (inputString.length() == 0 ||
-                inputString.equals(' ')) {
-            return "";
-        }
-        else if (inputString.charAt(0) != ' ') {
+            inputString.charAt(inputString.length()-1) != ' ') {
+
             return inputString;
+
+        }
+        else if (inputString.equals(" ")) {
+
+            return "";
+
         }
         else {
             StringBuilder stringBuilder = new StringBuilder(inputString);
-            int index = 0;
+            int index = inputString.length()-1;
             while (stringBuilder.charAt(index) == ' ') {
                 stringBuilder.deleteCharAt(index);
+                index--;
             }
             return stringBuilder.toString();
-        }
-    }
-
-    public static String removeFollowingSpacesFromStringRecursive(String inputString) {
-
-        if (inputString.length() == 0 ||
-                inputString.equals(' ')) {
-            return "";
-        }
-        else if (inputString.charAt(inputString.length()-1) != ' ') {
-            return inputString;
-        }
-        else {
-            return removeFollowingSpacesFromStringRecursive(
-                    inputString.substring(0, inputString.length() - 1)
-            );
         }
     }
 }
