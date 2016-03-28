@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-
 /**
  * Created by mbashir on 3/24/2016.
  */
@@ -8,7 +6,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        String inputString = "   This is a    string.    ";
+        String inputString = "";
 
         System.out.println(reverseStringWordForWord(inputString));
 
@@ -37,39 +35,6 @@ public class Main {
 
     public static String removeExtraSpacesFromString(String inputString) {
 
-        if (inputString.length() == 0 ||
-            inputString.equals(" ")) {
-
-            return "";
-
-        }
-        else {
-
-            StringBuilder inputStringBuilder = new StringBuilder(inputString.trim());
-            int spaceEncounteredAtIndex;
-            ArrayList<Integer> indicesToDelete = new ArrayList<Integer>();
-
-            int index = 0;
-            while (index <= inputStringBuilder.length() - 1) {
-
-                if (inputStringBuilder.charAt(index) == ' ') {
-                    spaceEncounteredAtIndex = index;
-
-                    while (inputStringBuilder.charAt(spaceEncounteredAtIndex + 1) == ' ') {
-                        indicesToDelete.add(spaceEncounteredAtIndex + 1);
-                        spaceEncounteredAtIndex++;
-                    }
-                    index = spaceEncounteredAtIndex + 2;
-                } else {
-                    index++;
-                }
-            }
-            int indexAdjuster = 0;
-            for (Integer indexToDelete : indicesToDelete) {
-                inputStringBuilder.deleteCharAt(indexToDelete + indexAdjuster);
-                indexAdjuster--;
-            }
-            return inputStringBuilder.toString();
-        }
+        return inputString.replaceAll("\\s+", " ").trim();
     }
 }
