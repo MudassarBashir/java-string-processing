@@ -8,7 +8,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        String inputString = "This    is a      string.";
+        String inputString = "   This is a    string.    ";
 
         System.out.println(reverseStringWordForWord(inputString));
 
@@ -38,27 +38,24 @@ public class Main {
     public static String removeExtraSpacesFromString(String inputString) {
 
         if (inputString.length() == 0 ||
-            inputString.equals(' ') ||
-            containsOnlySpaces(inputString)) {
+            inputString.equals(" ")) {
 
             return "";
-        }
-        else
-        {
-            inputString = removeLeadingSpacesFromString(inputString);
-            inputString = removeFollowingSpacesFromString(inputString);
 
-            StringBuilder inputStringBuilder = new StringBuilder(inputString);
+        }
+        else {
+
+            StringBuilder inputStringBuilder = new StringBuilder(inputString.trim());
             int spaceEncounteredAtIndex;
             ArrayList<Integer> indicesToDelete = new ArrayList<Integer>();
 
             int index = 0;
-            while (index <= inputString.length() - 1) {
+            while (index <= inputStringBuilder.length() - 1) {
 
-                if (inputString.charAt(index) == ' ') {
+                if (inputStringBuilder.charAt(index) == ' ') {
                     spaceEncounteredAtIndex = index;
 
-                    while (inputString.charAt(spaceEncounteredAtIndex + 1) == ' ') {
+                    while (inputStringBuilder.charAt(spaceEncounteredAtIndex + 1) == ' ') {
                         indicesToDelete.add(spaceEncounteredAtIndex + 1);
                         spaceEncounteredAtIndex++;
                     }
@@ -73,61 +70,6 @@ public class Main {
                 indexAdjuster--;
             }
             return inputStringBuilder.toString();
-        }
-    }
-
-    public static boolean containsOnlySpaces(String inputString) {
-
-        for (int counter = 0; counter <= inputString.length() - 1; counter++) {
-
-            if (inputString.charAt(counter) != ' ') {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    public static String removeLeadingSpacesFromString(String inputString) {
-
-        if (inputString.length() == 0 || inputString.charAt(0) != ' ') {
-
-            return inputString;
-        }
-        else if (inputString.equals(" ")) {
-
-            return "";
-        }
-        else {
-            StringBuilder stringBuilder = new StringBuilder(inputString);
-            int index = 0;
-            while (stringBuilder.charAt(index) == ' ') {
-                stringBuilder.deleteCharAt(index);
-            }
-            return stringBuilder.toString();
-        }
-    }
-
-    public static String removeFollowingSpacesFromString(String inputString) {
-
-        if (inputString.length() == 0 ||
-            inputString.charAt(inputString.length()-1) != ' ') {
-
-            return inputString;
-
-        }
-        else if (inputString.equals(" ")) {
-
-            return "";
-
-        }
-        else {
-            StringBuilder stringBuilder = new StringBuilder(inputString);
-            int index = inputString.length()-1;
-            while (stringBuilder.charAt(index) == ' ') {
-                stringBuilder.deleteCharAt(index);
-                index--;
-            }
-            return stringBuilder.toString();
         }
     }
 }
